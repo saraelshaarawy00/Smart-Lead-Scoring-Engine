@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex – AI Lead Scoring Dashboard</title>
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <header class="dashboard-header">
+        <div class="container">
+            <h1>Alex – AI Lead Scoring Dashboard</h1>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- Top Section: Selected Lead & Controls -->
+        <section class="overview-section">
+            <div class="card selected-lead-card">
+                <h2>Selected Lead Simulator</h2>
+                <div class="lead-info">
+                    <h3 id="selected-lead-name">Select a lead below</h3>
+                    <p id="selected-lead-company" class="company-name">--</p>
+                </div>
+
+                <div class="metrics-grid">
+                    <div class="metric-item">
+                        <span class="label">ICP Fit</span>
+                        <span class="value" id="disp-icp">0%</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="label">Intent Score</span>
+                        <span class="value" id="disp-intent">0%</span>
+                    </div>
+                    <div class="metric-item highlight">
+                        <span class="label">Final Score</span>
+                        <span class="value" id="disp-final">0%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card controls-card">
+                <h2>Interactive Controls</h2>
+                <p class="subtitle">Adjust values to simulate scoring updates</p>
+
+                <div class="control-group">
+                    <div class="control-header">
+                        <label for="range-icp">ICP Fit (%)</label>
+                        <span id="val-icp">50%</span>
+                    </div>
+                    <input type="range" id="range-icp" min="0" max="100" value="50">
+                </div>
+
+                <div class="control-group">
+                    <div class="control-header">
+                        <label for="range-intent">Intent Score (%)</label>
+                        <span id="val-intent">50%</span>
+                    </div>
+                    <input type="range" id="range-intent" min="0" max="100" value="50">
+                </div>
+
+                <div class="current-category">
+                    <span>Resulting Category:</span>
+                    <span id="disp-category" class="badge">--</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Middle Section: Lead List -->
+        <section class="leads-section">
+            <div class="section-header">
+                <h2>Lead Scoring List</h2>
+                <button class="btn-primary" id="reset-data">Reset Data</button>
+            </div>
+
+            <div class="card table-card">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Lead Name</th>
+                            <th>Company</th>
+                            <th>ICP Fit</th>
+                            <th>Intent</th>
+                            <th>Final Score</th>
+                            <th>Category</th>
+                            <th>Next Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leads-body">
+                        <!-- Rows rendered via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Bottom Section: Logic/Rules -->
+        <section class="logic-section">
+            <div class="card logic-card">
+                <h3><span class="icon">📊</span> Categorization Logic</h3>
+                <div class="logic-grid">
+                    <div class="logic-item">
+                        <h4>1. ICP Fitness</h4>
+                        <p>Industry, Size, Country, Role, Tech Stack.</p>
+                    </div>
+                    <div class="logic-item">
+                        <h4>2. Intent Signals</h4>
+                        <p>Demo requests, Pricing visits, Replies, Keywords.</p>
+                    </div>
+                    <div class="logic-item">
+                        <h4>3. Thresholds</h4>
+                        <ul class="threshold-list">
+                            <li><span class="dot hot"></span> <strong>HOT (≥ 60%)</strong>: Assign to Sales</li>
+                            <li><span class="dot warm"></span> <strong>WARM (30–59%)</strong>: Nurture</li>
+                            <li><span class="dot cold"></span> <strong>COLD (< 30%)</strong>: Automation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="dashboard-footer">
+        <p>Alex AI Sales Agent • Lead Scoring Demo</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
