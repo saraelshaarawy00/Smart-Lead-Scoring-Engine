@@ -17,121 +17,163 @@
 <body>
 
     <header class="dashboard-header">
-        <div class="container">
-            <h1>Alex – AI Lead Scoring Dashboard</h1>
+        <div class="container header-content">
+            <div class="header-left">
+                <h1>B2B Lead Scoring Engine</h1>
+                <p class="header-subtitle">Intelligent Qualification & Prioritization</p>
+            </div>
+            <div class="header-right">
+                <button class="btn-secondary" id="btn-manual">Manual Entry</button>
+                <button class="btn-primary" id="btn-verify">🤖 AI Auto-Verify</button>
+            </div>
         </div>
     </header>
 
     <main class="container">
 
-        <!-- Top Section: Selected Lead & Controls -->
-        <section class="overview-section">
-            <div class="card selected-lead-card">
-                <h2>Selected Lead Simulator</h2>
-                <div class="lead-info">
-                    <h3 id="selected-lead-name">Select a lead below</h3>
-                    <p id="selected-lead-company" class="company-name">--</p>
-                </div>
-
-                <div class="metrics-grid">
-                    <div class="metric-item">
-                        <span class="label">ICP Fit</span>
-                        <span class="value" id="disp-icp">0%</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="label">Intent Score</span>
-                        <span class="value" id="disp-intent">0%</span>
-                    </div>
-                    <div class="metric-item highlight">
-                        <span class="label">Final Score</span>
-                        <span class="value" id="disp-final">0%</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card controls-card">
-                <h2>Interactive Controls</h2>
-                <p class="subtitle">Adjust values to simulate scoring updates</p>
-
-                <div class="control-group">
-                    <div class="control-header">
-                        <label for="range-icp">ICP Fit (%)</label>
-                        <span id="val-icp">50%</span>
-                    </div>
-                    <input type="range" id="range-icp" min="0" max="100" value="50">
-                </div>
-
-                <div class="control-group">
-                    <div class="control-header">
-                        <label for="range-intent">Intent Score (%)</label>
-                        <span id="val-intent">50%</span>
-                    </div>
-                    <input type="range" id="range-intent" min="0" max="100" value="50">
-                </div>
-
-                <div class="current-category">
-                    <span>Resulting Category:</span>
-                    <span id="disp-category" class="badge">--</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- Middle Section: Lead List -->
-        <section class="leads-section">
-            <div class="section-header">
-                <h2>Lead Scoring List</h2>
-                <button class="btn-primary" id="reset-data">Reset Data</button>
-            </div>
-
-            <div class="card table-card">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Lead Name</th>
-                            <th>Company</th>
-                            <th>ICP Fit</th>
-                            <th>Intent</th>
-                            <th>Final Score</th>
-                            <th>Category</th>
-                            <th>Next Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="leads-body">
-                        <!-- Rows rendered via JS -->
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <!-- Bottom Section: Logic/Rules -->
-        <section class="logic-section">
+        <!-- Intro / Logic Section -->
+        <section class="intro-section">
             <div class="card logic-card">
-                <h3><span class="icon">📊</span> Categorization Logic</h3>
-                <div class="logic-grid">
-                    <div class="logic-item">
-                        <h4>1. ICP Fitness</h4>
-                        <p>Industry, Size, Country, Role, Tech Stack.</p>
+                <div class="logic-header">
+                    <h2>🎯 Scoring Logic</h2>
+                    <p>Dynamic evaluation based on weighted business factors.</p>
+                </div>
+                <div class="logic-factors">
+                    <div class="factor">
+                        <span class="factor-name">Industry</span>
+                        <span class="factor-weight">30%</span>
                     </div>
-                    <div class="logic-item">
-                        <h4>2. Intent Signals</h4>
-                        <p>Demo requests, Pricing visits, Replies, Keywords.</p>
+                    <div class="factor">
+                        <span class="factor-name">Company Size</span>
+                        <span class="factor-weight">20%</span>
                     </div>
-                    <div class="logic-item">
-                        <h4>3. Thresholds</h4>
-                        <ul class="threshold-list">
-                            <li><span class="dot hot"></span> <strong>HOT (≥ 60%)</strong>: Assign to Sales</li>
-                            <li><span class="dot warm"></span> <strong>WARM (30–59%)</strong>: Nurture</li>
-                            <li><span class="dot cold"></span> <strong>COLD (< 30%)</strong>: Automation</li>
-                        </ul>
+                    <div class="factor">
+                        <span class="factor-name">Role</span>
+                        <span class="factor-weight">25%</span>
+                    </div>
+                    <div class="factor">
+                        <span class="factor-name">Intent</span>
+                        <span class="factor-weight">25%</span>
+                    </div>
+                </div>
+                <div class="logic-thresholds">
+                    <div class="threshold hot">
+                        <span class="dot"></span> HOT (≥ 60%) → <strong>Examples: Sales Call</strong>
+                    </div>
+                    <div class="threshold warm">
+                        <span class="dot"></span> WARM (30–59%) → <strong>Nurture Campaign</strong>
+                    </div>
+                    <div class="threshold cold">
+                        <span class="dot"></span> COLD (< 30%) → <strong>Automation Only</strong>
                     </div>
                 </div>
             </div>
+
+            <!-- Summary Stats -->
+            <div class="summary-cards">
+                <div class="stat-card hot">
+                    <h3>HOT Leads</h3>
+                    <div class="stat-value" id="count-hot">0</div>
+                    <div class="stat-label">Ready for Sales</div>
+                </div>
+                <div class="stat-card warm">
+                    <h3>WARM Leads</h3>
+                    <div class="stat-value" id="count-warm">0</div>
+                    <div class="stat-label">Nurturing</div>
+                </div>
+                <div class="stat-card cold">
+                    <h3>COLD Leads</h3>
+                    <div class="stat-value" id="count-cold">0</div>
+                    <div class="stat-label">Monitoring</div>
+                </div>
+            </div>
         </section>
+
+        <!-- Main Workspace -->
+        <div class="workspace-grid">
+
+            <!-- Left: Simulator -->
+            <section class="simulator-section">
+                <div class="card controls-card">
+                    <div class="card-header">
+                        <h2>🎛️ Lead Simulator</h2>
+                        <p class="subtitle">Select a lead to visualize impact</p>
+                    </div>
+
+                    <div class="selected-lead-info">
+                        <h3 id="selected-lead-name">Select a lead...</h3>
+                        <p id="selected-lead-company" class="company-name">--</p>
+                    </div>
+
+                    <div class="sliders-container">
+                        <div class="control-group">
+                            <label>Industry Fit <span id="val-industry" class="val-display">50%</span></label>
+                            <input type="range" id="range-industry" min="0" max="100" value="50">
+                        </div>
+                        <div class="control-group">
+                            <label>Company Size <span id="val-size" class="val-display">50%</span></label>
+                            <input type="range" id="range-size" min="0" max="100" value="50">
+                        </div>
+                        <div class="control-group">
+                            <label>Role Match <span id="val-role" class="val-display">50%</span></label>
+                            <input type="range" id="range-role" min="0" max="100" value="50">
+                        </div>
+                        <div class="control-group">
+                            <label>Intent Signal <span id="val-intent" class="val-display">50%</span></label>
+                            <input type="range" id="range-intent" min="0" max="100" value="50">
+                        </div>
+                    </div>
+
+                    <div class="simulation-result">
+                        <div class="result-row">
+                            <span>Final Score</span>
+                            <span class="big-score" id="disp-final">0%</span>
+                        </div>
+                        <div class="result-row">
+                            <span>Category</span>
+                            <span id="disp-category" class="badge">--</span>
+                        </div>
+                        <div class="result-action" id="disp-action">
+                            --
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right: Table -->
+            <section class="table-section">
+                <div class="card table-card">
+                    <div class="table-header-row">
+                        <h2>Active Leads</h2>
+                        <button class="icon-btn" id="reset-data" title="Reset all simulations">↺ Reset</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Lead Name</th>
+                                    <th>Ind.</th>
+                                    <th>Size</th>
+                                    <th>Role</th>
+                                    <th>Int.</th>
+                                    <th>Score</th>
+                                    <th>Status</th>
+                                    <th>Next Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="leads-body">
+                                <!-- Rows via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
 
     </main>
 
     <footer class="dashboard-footer">
-        <p>Alex AI Sales Agent • Lead Scoring Demo</p>
+        <p>B2B Intelligence Suite • v2.4.0</p>
     </footer>
 
     <script src="script.js"></script>
